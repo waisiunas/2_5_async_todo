@@ -42,7 +42,7 @@ require_once('./partials/styles.php');
 
 								<div class="card-body">
 									<div id="tasks">
-										<div class="row mb-2">
+										<!-- <div class="row mb-2">
 											<div class="col-md-9">
 												<input type="text" class="form-control" id="task-" value="Database Value" placeholder="Please enter the task!" readonly>
 											</div>
@@ -52,7 +52,7 @@ require_once('./partials/styles.php');
 											<div class="col">
 												<button class="btn btn-danger" id="delete-" onclick="editTask(1)">Delete</button>
 											</div>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
