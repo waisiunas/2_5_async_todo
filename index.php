@@ -42,7 +42,7 @@ require_once('./partials/styles.php');
 
 								<div class="card-body">
 									<div id="tasks">
-										<!-- <div class="row mb-2">
+										<div class="row mb-2">
 											<div class="col-md-9">
 												<input type="text" class="form-control" id="task-" value="Database Value" placeholder="Please enter the task!" readonly>
 											</div>
@@ -52,7 +52,7 @@ require_once('./partials/styles.php');
 											<div class="col">
 												<button class="btn btn-danger" id="delete-" onclick="editTask(1)">Delete</button>
 											</div>
-										</div> -->
+										</div>
 									</div>
 								</div>
 							</div>
@@ -127,6 +127,7 @@ require_once('./partials/styles.php');
 							let alert = alertMsg('success', result.success);
 							error.innerHTML = alert;
 							addFormElement.reset();
+							showTasks();
 						} else {
 							let alert = alertMsg('danger', 'Something went wrong!');
 							error.innerHTML = alert;
@@ -151,7 +152,7 @@ require_once('./partials/styles.php');
 					let tasks = '';
 
 					result.forEach(function(value) {
-						tasks += `<div class="row mb-2"><div class="col-md-9"><input type="text" class="form-control" id="task-${value.id}" value="${value.task_body}" placeholder="Please enter the task!" readonly></div><div class="col"><button class="btn btn-info" id="edit-${value.id}" onclick="editTask(${value.id})">Edit</button></div><div class="col"><button class="btn btn-danger" id="delete-${value.id}" onclick="editTask(${value.id})">Delete</button></div></div>`;
+						tasks += `<div class="row mb-2"><div class="col-md-9"><input type="text" class="form-control" id="task-${value.id}" value="${value.task_body}" placeholder="Please enter the task!" readonly></div><div class="col"><button class="btn btn-info" id="edit-${value.id}" onclick="editTask(${value.id})">Edit</button></div><div class="col"><button class="btn btn-danger" id="delete-${value.id}" onclick="deleteTask(${value.id})">Delete</button></div></div>`;
 					})
 
 					tasksElement.innerHTML = tasks;
@@ -216,12 +217,36 @@ require_once('./partials/styles.php');
 							}
 						})
 				}
-
 			}
 		}
 
 		function deleteTask(id) {
-			console.log(`Bawa g ${id} ko delete kr dien`);
+			const data = {
+						id: id,
+						submit: 1
+					}
+
+					fetch('./delete-task.php', {
+							method: 'POST',
+							body: JSON.stringify(data),
+							headers: {
+								'Content-Type': 'application.json'
+							}
+						})
+						.then(function(response) {
+							return response.json();
+						})
+						.then(function(result) {
+							if (result.success) {
+								let alert = alertMsg('success', result.success);
+								error.innerHTML = alert;
+								showTasks();
+							} else {
+								let alert = alertMsg('danger', 'Something went wrong!');
+								error.innerHTML = alert;
+							}
+						})
+
 		}
 	</script>
 
